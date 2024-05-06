@@ -3,9 +3,12 @@ class Checkbook:
         self.balance = 0.0
 
     def deposit(self, amount):
-        self.balance += amount
-        print("Deposited ${:.2f}".format(amount))
-        print("Current Balance: ${:.2f}".format(self.balance))
+        if amount < 0:
+            print("Error: Please enter a positive amount for deposit.")
+        else:
+            self.balance += amount
+            print("Deposited ${:.2f}".format(amount))
+            print("Current Balance: ${:.2f}".format(self.balance))
 
     def withdraw(self, amount):
         if amount > self.balance:

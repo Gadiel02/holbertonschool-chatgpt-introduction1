@@ -23,20 +23,34 @@ def check_winner(board):
 def tic_tac_toe():
     board = [[" "]*3 for _ in range(3)]
     player = "X"
-    while not check_winner(board):
+    winner = False
+    moves_left = 9  # Number of moves left
+
+    while moves_left > 0 and not winner:
         print_board(board)
-        row = int(input("Enter row (0, 1, or 2) for player " + player + ": "))
-        col = int(input("Enter column (0, 1, or 2) for player " + player + ": "))
-        if board[row][col] == " ":
-            board[row][col] = player
-            if player == "X":
-                player = "O"
+        try:
+            row = int(input("Enter row (0, 1, or 2) for player " + player + ": "))
+            col = int(input("Enter column (0, 1, or 2) for player " + player + ": "))
+            if board[row][col] == " ":
+                board[row][col] = player
+                moves_left -= 1
+
+                if check_winner(board):
+                    winner = True
+                else:
+                    if player == "X":
+                        player = "O"
+                    else:
+                        player = "X"
             else:
-                player = "X"
-        else:
-            print("That spot is already taken! Try again.")
+                print("That spot is already taken! Try again.")
+        except (ValueError, IndexError):
+            print("Invalid input! Please enter a valid row and column (0, 1, or 2).")
 
     print_board(board)
-    print("Player " + player + " wins!")
+    if winner:
+        print("Player " + player + " wins!")
+    else:
+        print("It's a tie!")
 
 tic_tac_toe()
